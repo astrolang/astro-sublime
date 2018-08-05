@@ -13,19 +13,19 @@ contexts:
       scope: comment.line.number-sign.astro
       name: non_astro
 
-    - match: \b0x(_?[A-Fa-f0-9])*((\.(_?[A-Fa-f0-9])+)?(p[+-]?)?[A-Fa-f0-9_]+)?('[A-Za-z][A-Za-z0-9]*)? # hexadecimal_numbers
+    - match: \b0x(_?[A-Fa-f0-9])*((\.(_?[A-Fa-f0-9])+)?(p[+-]?)?[A-Fa-f0-9_]+)? # hexadecimal_numbers
       scope: constant.numeric.astro
       name: hexadecimal_numbers
 
-    - match: \b0o(_?[0-8])*((\.(_?[0-8])+)?(p[+-]?)?[0-8_]+)?('[A-Za-z][A-Za-z0-9]*)? # octal_numbers
+    - match: \b0o(_?[0-8])*((\.(_?[0-8])+)?(p[+-]?)?[0-8_]+)? # octal_numbers
       scope: constant.numeric.astro
       name: octal_numbers
 
-    - match: \b0b(_?[01])*((\.(_?[01])+)?(p[+-]?)?[01_]+)?('[A-Za-z][A-Za-z0-9]*)? # binary_numbers
+    - match: \b0b(_?[01])*((\.(_?[01])+)?(p[+-]?)?[01_]+)? # binary_numbers
       scope: constant.numeric.astro
       name: binary_numbers
 
-    - match: \b[0-9](_?[0-9])*((\.(_?[0-9])+)?(e[+-]?)?(_?[0-9])+)?('[A-Za-z][A-Za-z0-9]*)? # decimal_numbers
+    - match: \b[0-9](_?[0-9])*((\.(_?[0-9])+)?(e[+-]?)?(_?[0-9])+)? # decimal_numbers
       scope: constant.numeric.astro
       name: decimal_numbers
 
