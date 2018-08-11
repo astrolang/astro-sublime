@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+type ${1:name}(${2:param}):
+    ${3:pass}
+]]></content>
+  <tabTrigger>type</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Defines a type with the specified parameters.</description>
+</snippet>

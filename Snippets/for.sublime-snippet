@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+for ${1:variable} in ${2:iterable}:
+    ${3:pass}
+]]></content>
+  <tabTrigger>for</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Creates a for loop.</description>
+</snippet>

@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+elif ${1:condition}:
+    ${2:pass}
+]]></content>
+  <tabTrigger>elif</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Creates an elif expression.</description>
+</snippet>

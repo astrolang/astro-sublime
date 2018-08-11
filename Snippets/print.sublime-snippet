@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+print('${1:message}')
+]]></content>
+  <tabTrigger>print</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Creates a print statement.</description>
+</snippet>

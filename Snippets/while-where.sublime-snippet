@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+while ${1:condition1} where ${2:condition2}:
+    ${2:pass}
+]]></content>
+  <tabTrigger>whilew</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Creates a while loop with a "where" clause.</description>
+</snippet>

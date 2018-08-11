@@ -33,10 +33,6 @@ contexts:
       scope: support.function.macro.astro
       name: macros
 
-    - match: (\(.+\)|[A-Za-z_0-9]+)\s*(?=\=\>) # lambdas
-      scope: entity.name.function.astro
-      name: lambdas
-
     - match: (#-) # multiline_comments
       push: multiline_comments
 
@@ -44,26 +40,30 @@ contexts:
       scope: comment.line.number-sign.astro
       name: single_line_comments
 
-    - match: (::|>:|<:) # type_annotation
+    - match: (?<=^|:|=)\s*(::|>:|<:) # type_annotation
       push: type_annotation
 
-    - match: (?<!\.)((\.|:)[A-Za-z_][_A-Za-z0-9]*!?\.?) # dot_notation
+    - match: (?<!\.)((\.|:)[A-Za-z_][_A-Za-z0-9]*!?(\.(?![.A-Za-z_0-9]))?) # dot_notation
       scope: constant.numeric.astro
       name: dot_notation
 
-    - match: \b(true|false|nil)\b # constant_keywords
+    - match: \b(true|false|nil|NaN)\b # constant_keywords
       scope: constant.language.astro
       name: constant_keywords
 
-    - match: \b(?:for|end|if|where|\?|else|elif|async|await|return|delegate|yield|from|while|do|loop|try|ensure|defer|raise|continue|break|fallthrough|pass|export|except|import)\b # control_keywords
+    - match: \b(?:try!|(for|end|if|\?|else|elif|async|await|return|delegate|yield|from|while|do|loop|try|ensure|raise|continue|break|fallthrough|pass|except)\b) # control_keywords
       scope: keyword.control.astro
       name: control_keywords
 
-    - match: \b(?:type|fun|let|var|NaN|iso|ref|const|as)\b # declaration_keywords
+    - match: \b(?:type|fun|let|var|import|export)\b # declaration_keywords
       scope: storage.modifier.astro
       name: declaration_keywords
 
-    - match: (([A-Za-z_][_A-Za-z0-9]*|(=|\||\&|\>|\<|!|\+|-|\*|\/|\^|%|\?|≥|≤|≠|≈|×|±|÷)+)!?\.?)(?=\s*(\{.+\}\s*)?\() # function_calls
+    - match: \b(and|or|not|in|is|mod|where|iso|ref|const|as|typeof)\b # keyword_operators
+      scope: keyword.control.astro"
+      name: keyword_operators
+
+    - match: ([A-Za-z_][_A-Za-z0-9]*)!?\.?(?=(\{.+\}\s*)?\() # function_calls
       scope: entity.name.function.astro
       name: function_calls
 
@@ -71,11 +71,11 @@ contexts:
       scope: entity.name.function.astro
       name: function_calls_extended_notation
 
-    - match: ([A-Za-z_][_A-Za-z0-9]*( (?!where )[A-Za-z_][_A-Za-z0-9]*)+\s*(?=[+-/*]?\=)) # multiple_declaration
+    - match: ([A-Za-z_][_A-Za-z0-9]*( (?!and |or |not |in |is |mod |where |iso |ref |const |as |typeof )[A-Za-z_][_A-Za-z0-9]*)+\s*(?=[+-/*]?\=)) # multiple_declaration
       scope: astro
       name: multiple_declaration
 
-    - match: (?<!let |var |import )([^\=|\:|\;|,|\.|\<|\>|'|\"|\*|\/|\-|\+|\^|\%|≥|≤|≠|≈|×|±|÷|\\|\}|\{|\)|\(|\!|\&|\$|\@|\||\~|type|fun|let|var|as|for|end|if|where|\?|else|elif|async|await|return|yield|from|while|do|with|loop|try|ensure|defer|raise|continue|break|fallthrough|pass|export|except|import|const|NaN|iso|ref|const|and|or|in|not|mod|is|typeof]|\b[a-zA-Z_][A-Za-z_0-9]*!?)\s+(?=[A-Za-z_0-9]+|\"|'|@|\$|\{|\[|\(|/[^/]+/\s*(?!(\s*[\{\[\(a-zA-Z0-9@$])|=|\||\&|\>|\<|!|\+|-|\*|\/|\^|%|\?|≥|≤|≠|≈|×|±|÷))(?!(if|else|for|end|while|and|or|as|where|iso|ref|in|not|mod|is|typeof|except)\b) # command_notation
+    - match: (?<!let |var |import )(\b[a-zA-Z_][A-Za-z_0-9]*!?)\s+(?=[A-Za-z_0-9]+|\"|'|`|@|\$|\{|\[|\()(?!\b(and|or|not|in|is|mod|where|iso|ref|const|as|typeof)\b) # command_notation
       scope: entity.name.function.astro
       name: command_notation
 
@@ -99,11 +99,10 @@ contexts:
       scope: punctuation.definition.string.begin.astro
       push: single_quoted_string
 
-    - match: /[^/]+/\s*(?!(\s*[\{\[\(a-zA-Z0-9@$])|=|\||\&|\>|\<|!|\+|-|\*|\/|\^|%|\?|≥|≤|≠|≈|×|±|÷) # regex
-      scope: string.quoted.single.astro
-      name: regex
+    - match: \` # regex
+      push: regex
 
-    - match: \.?(=|\||\&|\>|\<|!|\+|-|\*|\/|\^|%|\?|≥|≤|≠|≈|×|±|÷)+|\b(and|or|not|mod|typeof)\b # operators
+    - match: \.?(=|\||\&|\>|\<|!|\+|-|\*|\/|\^|%|\?|≥|≤|≠|≈|×|±|÷)+ # operators
       scope: keyword.operator.astro
       name: operators
 
@@ -141,6 +140,13 @@ contexts:
     - meta_scope: string.quoted.single.astro
     - match: \'\'\'
       scope: punctuation.definition.string.end.astro
+      pop: true
+
+  regex:
+    - meta_scope: string.regexp.astro
+    - match: \\.
+      scope: constant.character.escape.astro
+    - match: \`
       pop: true
 
   string_interpolate:

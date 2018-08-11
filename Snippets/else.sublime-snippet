@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+else:
+    ${1:pass}
+]]></content>
+  <tabTrigger>elif</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Creates an else expression.</description>
+</snippet>

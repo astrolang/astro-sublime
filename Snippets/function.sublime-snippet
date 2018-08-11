@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+fun ${1:name}(${2:param}):
+    ${3:pass}
+]]></content>
+  <tabTrigger>fun</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Defines a function with the specified parameters.</description>
+</snippet>

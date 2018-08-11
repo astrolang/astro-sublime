@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+if ${1:condition1} where ${2:condition2}:
+    ${2:pass}
+]]></content>
+  <tabTrigger>ifw</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Creates an if expression with a "where" clause.</description>
+</snippet>

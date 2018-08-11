@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+var ${1:variable} = ${2:variable}
+]]></content>
+  <tabTrigger>var</tabTrigger>
+  <scope>source.astro</scope>
+  <description>Declares a variable.</description>
+</snippet>
