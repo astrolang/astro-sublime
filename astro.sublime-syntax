@@ -29,7 +29,7 @@ contexts:
       scope: constant.numeric.astro
       name: decimal_numbers
 
-    - match: \@(?:[A-Za-z_][_A-Za-z0-9]*)|@\(.+\) # macros
+    - match: \@(?:[A-Za-z_][_A-Za-z0-9]*)|@\([^)]+\) # macros
       scope: support.function.macro.astro
       name: macros
 
@@ -43,7 +43,7 @@ contexts:
     - match: (?<=^|:|=)\s*(::|>:|<:) # type_annotation
       push: type_annotation
 
-    - match: (?<!\.)((\.|:)[A-Za-z_][_A-Za-z0-9]*!?(\.(?![.A-Za-z_0-9]))?) # dot_notation
+    - match: (?<!\.)(\.[A-Za-z_][_A-Za-z0-9]*!?(\.(?![.A-Za-z_0-9]))?)|(?<=,)\s*:[A-Za-z_][_A-Za-z0-9]*!? # dot_notation
       scope: constant.numeric.astro
       name: dot_notation
 
@@ -67,15 +67,15 @@ contexts:
       scope: entity.name.function.astro
       name: function_calls
 
-    - match: :(?=\() # function_calls_extended_notation
+    - match: (?<=,)\s*:(?=\() # function_extended_notation
       scope: entity.name.function.astro
-      name: function_calls_extended_notation
+      name: function_extended_notation
 
     - match: ([A-Za-z_][_A-Za-z0-9]*( (?!and |or |not |in |is |mod |where |iso |ref |const |as |typeof )[A-Za-z_][_A-Za-z0-9]*)+\s*(?=[+-/*]?\=)) # multiple_declaration
       scope: astro
       name: multiple_declaration
 
-    - match: (?<!let |var |import )(\b[a-zA-Z_][A-Za-z_0-9]*!?)\s+(?=[A-Za-z_0-9]+|\"|'|`|@|\$|\{|\[|\()(?!\b(and|or|not|in|is|mod|where|iso|ref|const|as|typeof)\b) # command_notation
+    - match: (?<!let |var |import )(\b[a-zA-Z_][A-Za-z_0-9]*!?)\s+(?=[A-Za-z_0-9]+|\"|'|`|(\|\|)|@|\$|\{|\[|\()(?!\b(and|or|not|in|is|mod|where|iso|ref|const|as|typeof)\b) # command_notation
       scope: entity.name.function.astro
       name: command_notation
 
@@ -99,7 +99,12 @@ contexts:
       scope: punctuation.definition.string.begin.astro
       push: single_quoted_string
 
-    - match: \` # regex
+    - match: \`.\` # chars
+      scope: string.quoted.astro
+      name: chars
+
+    - match: \|\| # regex
+      scope: punctuation.definition.regexp.begin.astro
       push: regex
 
     - match: \.?(=|\||\&|\>|\<|!|\+|-|\*|\/|\^|%|\?|≥|≤|≠|≈|×|±|÷)+ # operators
@@ -146,7 +151,8 @@ contexts:
     - meta_scope: string.regexp.astro
     - match: \\.
       scope: constant.character.escape.astro
-    - match: \`
+    - match: \|\|
+      scope: punctuation.definition.regexp.begin.astro
       pop: true
 
   string_interpolate:
